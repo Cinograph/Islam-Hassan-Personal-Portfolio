@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islam Hassan - Web & 2D Graphic Designer</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#2563eb', // Blue-600
+                        secondary: '#1e40af', // Blue-800
+                        accent: '#3b82f6', // Blue-500
+                        darkBg: '#0f172a', // Slate-900
+                        darkCard: '#1e293b', // Slate-800
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            .dark & { background: #1e293b; }
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            background-image: radial-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .dark .bg-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+
+        /* Float Animation for Image */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Language Transition */
+        .lang-fade {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-gray-50 text-gray-900 transition-colors duration-300 dark:bg-darkBg dark:text-gray-100" dir="ltr">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md bg-white/80 dark:bg-darkBg/80 border-b border-gray-200 dark:border-gray-800" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo/Name -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="text-2xl font-bold tracking-tighter">
+                        <span data-en="Islam" data-ar="إسلام">Islam</span><span class="text-primary" data-en="Hassan" data-ar="حسن">Hassan</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8 rtl:space-x-reverse">
+                    <a href="#home" class="font-medium hover:text-primary transition-colors" data-en="Home" data-ar="الرئيسية">Home</a>
+                    <a href="#about" class="font-medium hover:text-primary transition-colors" data-en="About" data-ar="عني">About</a>
+                    <a href="#experience" class="font-medium hover:text-primary transition-colors" data-en="Experience" data-ar="الخبرات">Experience</a>
+                    <a href="#skills" class="font-medium hover:text-primary transition-colors" data-en="Skills" data-ar="المهارات">Skills</a>
+                    <a href="#contact" class="font-medium hover:text-primary transition-colors" data-en="Contact" data-ar="التواصل">Contact</a>
+                    
+                    <!-- Language Toggle -->
+                    <button id="lang-toggle-desktop" class="px-3 py-1 text-sm font-semibold rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        عربي
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                        <i class="fas fa-moon dark:hidden text-gray-800"></i>
+                        <i class="fas fa-sun hidden dark:block text-yellow-300"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4 rtl:space-x-reverse">
+                    <!-- Language Toggle Mobile -->
+                    <button id="lang-toggle-mobile" class="px-2 py-1 text-xs font-semibold rounded-md border border-gray-300 dark:border-gray-600">
+                        AR
+                    </button>
+                    <button id="theme-toggle-mobile" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block text-yellow-300"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300 hover:text-primary focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-darkCard absolute w-full border-b border-gray-200 dark:border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors mobile-link" data-en="Home" data-ar="الرئيسية">Home</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors mobile-link" data-en="About" data-ar="عني">About</a>
+                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors mobile-link" data-en="Experience" data-ar="الخبرات">Experience</a>
+                <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors mobile-link" data-en="Skills" data-ar="المهارات">Skills</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors mobile-link" data-en="Contact" data-ar="التواصل">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div data-aos="fade-right" data-aos-duration="1000" class="lang-fade">
+                    <div class="inline-block px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-primary dark:text-blue-300 font-medium text-sm mb-6 border border-blue-200 dark:border-blue-800" data-en="Hello, I'm" data-ar="مرحباً، أنا">
+                        Hello, I'm
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4" data-en="Islam Hassan <br> El.Khedewy" data-ar="إسلام حسن <br> الخديوي">
+                        Islam Hassan <br> El.Khedewy
+                    </h1>
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-gradient" data-en="Web & 2D Graphic Designer | Lecturer" data-ar="مصمم ويب وجرافيك 2D | محاضر">
+                        Web & 2D Graphic Designer | Lecturer
+                    </h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl leading-relaxed" data-en="Creative and results-driven designer with over 5 years of experience in corporate design, visual identity, branding, and content creation." data-ar="مصمم مبدع وموجه نحو النتائج بخبرة تزيد عن 5 سنوات في تصميم الشركات والهوية البصرية والعلامات التجارية وصناعة المحتوى.">
+                        Creative and results-driven designer with over 5 years of experience in corporate design, visual identity, branding, and content creation.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact" class="px-8 py-3.5 bg-primary hover:bg-secondary text-white font-medium rounded-lg shadow-lg shadow-primary/30 transition-all duration-300 transform hover:-translate-y-1" data-en="Contact Me" data-ar="تواصل معي">
+                            Contact Me
+                        </a>
+                        <a href="https://islamhassan2026.myportfolio.com/" target="_blank" class="px-8 py-3.5 bg-white dark:bg-darkCard text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary font-medium rounded-lg shadow-sm transition-all duration-300 flex items-center gap-2 group">
+                            <span data-en="View Portfolio" data-ar="عرض معرض الأعمال">View Portfolio</span> <i class="fas fa-arrow-right rtl:rotate-180 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Image -->
+                <div class="relative mx-auto lg:ml-auto max-w-md" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <!-- Decorative background blob -->
+                    <div class="absolute inset-0 bg-gradient-to-tr from-primary to-purple-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+                    
+                    <!-- Profile Image Container -->
+                    <div class="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800 bg-gray-200 animate-float">
+                        <!-- Profile Image -->
+                        <img src="IMG-20260326-WA0016.jpg" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/600x800/1e293b/3b82f6?text=Islam+Hassan';" 
+                             alt="Islam Hassan El.Khedewy" 
+                             class="w-full h-full object-cover object-top">
+                        
+                        <!-- Location Badge -->
+                        <div class="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-darkCard/90 backdrop-blur-sm p-3 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-primary">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider" data-en="Location" data-ar="الموقع">Location</p>
+                                <p class="text-sm font-semibold text-gray-900 dark:text-white" data-en="Alexandria, Egypt" data-ar="الإسكندرية، مصر">Alexandria, Egypt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white dark:bg-darkCard transition-colors duration-300 border-y border-gray-100 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-en="Professional Summary" data-ar="الملخص المهني">Professional Summary</h2>
+                <div class="h-1 w-20 bg-primary mx-auto rounded-full mb-6"></div>
+                <p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed lang-fade" data-en="Highly proficient in Adobe Creative Suite (Photoshop, Illustrator, Premiere Pro), with hands-on experience using modern design tools such as Figma, Canva, Affinity, and AI tools. Adept at transforming marketing strategies into compelling visual solutions that strengthen brand presence." data-ar="كفاءة عالية في استخدام حزمة Adobe Creative Suite (فوتوشوب، إليستريتور، بريمير برو)، مع خبرة عملية في استخدام أدوات التصميم الحديثة مثل Figma و Canva و Affinity وأدوات الذكاء الاصطناعي. بارع في تحويل استراتيجيات التسويق إلى حلول بصرية مقنعة تعزز حضور العلامة التجارية.">
+                    Highly proficient in Adobe Creative Suite (Photoshop, Illustrator, Premiere Pro), with hands-on experience using modern design tools such as Figma, Canva, Affinity, and AI tools. Adept at transforming marketing strategies into compelling visual solutions that strengthen brand presence.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 lang-fade">
+                <!-- Education -->
+                <div class="bg-gray-50 dark:bg-darkBg rounded-2xl p-8 border border-gray-100 dark:border-gray-800 hover:shadow-lg transition-shadow duration-300" data-aos="fade-right">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-primary text-xl">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold" data-en="Education" data-ar="التعليم">Education</h3>
+                    </div>
+                    
+                    <div class="relative pl-8 rtl:pl-0 rtl:pr-8 border-l-2 rtl:border-l-0 rtl:border-r-2 border-gray-200 dark:border-gray-700">
+                        <div class="absolute -left-[9px] rtl:left-auto rtl:-right-[9px] top-0 w-4 h-4 bg-primary rounded-full border-4 border-white dark:border-darkBg"></div>
+                        <h4 class="text-lg font-bold text-gray-900 dark:text-white" data-en="Bachelor of Arts in Egyptian and Islamic History and Antiquities" data-ar="ليسانس الآداب في التاريخ والآثار المصرية والإسلامية">Bachelor of Arts in Egyptian and Islamic History and Antiquities</h4>
+                        <p class="text-primary font-medium my-1" data-en="Alexandria University, Egypt" data-ar="جامعة الإسكندرية، مصر">Alexandria University, Egypt</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2" data-en="September 2015 - May 2019" data-ar="سبتمبر 2015 - مايو 2019">September 2015 - May 2019</p>
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-md text-sm font-semibold" data-en="Grade: Very Good" data-ar="التقدير: جيد جداً">Grade: Very Good</span>
+                    </div>
+                </div>
+
+                <!-- Volunteer Experience -->
+                <div class="bg-gray-50 dark:bg-darkBg rounded-2xl p-8 border border-gray-100 dark:border-gray-800 hover:shadow-lg transition-shadow duration-300" data-aos="fade-left">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center text-purple-600 text-xl">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold" data-en="Volunteer Experience" data-ar="تجارب التطوع">Volunteer Experience</h3>
+                    </div>
+                    
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-purple-500 mt-1"></i>
+                            <span class="text-gray-700 dark:text-gray-300" data-en="Alexandria Library International Book Fair" data-ar="معرض مكتبة الإسكندرية الدولي للكتاب">Alexandria Library International Book Fair</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-purple-500 mt-1"></i>
+                            <span class="text-gray-700 dark:text-gray-300" data-en="Resala Charitable Society" data-ar="جمعية رسالة للأعمال الخيرية">Resala Charitable Society</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-purple-500 mt-1"></i>
+                            <span class="text-gray-700 dark:text-gray-300" data-en="Youth 2023 Development Foundation" data-ar="مؤسسة شباب 2023 للتنمية">Youth 2023 Development Foundation</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-purple-500 mt-1"></i>
+                            <span class="text-gray-700 dark:text-gray-300" data-en="Young Politician Initiative" data-ar="مبادرة السياسي الشاب">Young Politician Initiative</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-purple-500 mt-1"></i>
+                            <span class="text-gray-700 dark:text-gray-300" data-en="Student Union of the Faculty of Arts" data-ar="اتحاد طلاب كلية الآداب">Student Union of the Faculty of Arts</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-purple-500 mt-1"></i>
+                            <span class="text-gray-700 dark:text-gray-300" data-en="Museum of Islamic Art - Cairo" data-ar="متحف الفن الإسلامي - القاهرة">Museum of Islamic Art - Cairo</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-purple-500 mt-1"></i>
+                            <span class="text-gray-700 dark:text-gray-300" data-en="Life Makers Association for Charitable Works" data-ar="جمعية صناع الحياة للأعمال الخيرية">Life Makers Association for Charitable Works</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-gray-50 dark:bg-darkBg transition-colors duration-300 bg-pattern">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 lang-fade">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-en="Professional Experience" data-ar="الخبرة المهنية">Professional Experience</h2>
+                <div class="h-1 w-20 bg-primary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="relative border-l-2 rtl:border-l-0 rtl:border-r-2 border-primary/30 space-y-12 ml-3 rtl:ml-0 rtl:mr-3 md:mx-0">
+                
+                <!-- Experience 1 -->
+                <div class="relative pl-8 rtl:pl-0 rtl:pr-8 md:px-0" data-aos="fade-up">
+                    <div class="md:grid md:grid-cols-5 md:gap-8 items-start">
+                        <!-- Timeline Dot (Desktop) -->
+                        <div class="hidden md:flex absolute left-[50%] rtl:right-[50%] -translate-x-[50%] rtl:translate-x-[50%] w-10 h-10 bg-primary text-white rounded-full items-center justify-center border-4 border-gray-50 dark:border-darkBg shadow-lg z-10">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <!-- Timeline Dot (Mobile) -->
+                        <div class="md:hidden absolute -left-[21px] rtl:left-auto rtl:-right-[21px] top-1 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center border-4 border-gray-50 dark:border-darkBg shadow-sm">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+
+                        <!-- Date/Company (Left side on desktop) -->
+                        <div class="md:col-span-2 md:text-right rtl:md:text-left pt-2 md:pr-12 rtl:md:pr-0 rtl:md:pl-12 mb-4 md:mb-0">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white" data-en="Freelancer Graphic Designer" data-ar="مصمم جرافيك مستقل (Freelance)">Freelancer Graphic Designer</h3>
+                            <p class="text-primary font-medium" data-en="Alexandria, Egypt" data-ar="الإسكندرية، مصر">Alexandria, Egypt</p>
+                            <span class="inline-block mt-2 px-3 py-1 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium" data-en="September 2023 - Present" data-ar="سبتمبر 2023 - الحاضر">September 2023 - Present</span>
+                        </div>
+
+                        <!-- Details (Right side on desktop) -->
+                        <div class="md:col-span-3 bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 md:ml-12 rtl:md:ml-0 rtl:md:mr-12 hover:shadow-md transition-shadow">
+                            <ul class="space-y-2 text-gray-600 dark:text-gray-400 list-disc list-inside marker:text-primary">
+                                <li data-en="Designed print and digital materials, including social media graphics and banners." data-ar="تصميم المواد المطبوعة والرقمية، بما في ذلك تصميمات السوشيال ميديا واللافتات.">Designed print and digital materials, including social media graphics and banners.</li>
+                                <li data-en="Edited and retouched images using Photoshop, Premiere Pro, Figma, Canva, Affinity, and AI tools." data-ar="تعديل وتنقيح الصور باستخدام فوتوشوب، بريمير برو، فيجما، كانفا، أفينيتي، وأدوات الذكاء الاصطناعي.">Edited and retouched images using Photoshop, Premiere Pro, Figma, Canva, Affinity, and AI tools.</li>
+                                <li data-en="Managed multiple freelance projects simultaneously, consistently meeting deadlines." data-ar="إدارة عدة مشاريع مستقلة في وقت واحد، مع الالتزام المستمر بالمواعيد النهائية.">Managed multiple freelance projects simultaneously, consistently meeting deadlines.</li>
+                                <li data-en="Collaborated with clients to develop creative concepts, ensuring brand consistency." data-ar="التعاون مع العملاء لتطوير مفاهيم إبداعية، لضمان اتساق العلامة التجارية.">Collaborated with clients to develop creative concepts, ensuring brand consistency.</li>
+                                <li data-en="Learned and implemented new design techniques to improve quality." data-ar="تعلم وتطبيق تقنيات تصميم جديدة لتحسين جودة العمل.">Learned and implemented new design techniques to improve quality.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 2 -->
+                <div class="relative pl-8 rtl:pl-0 rtl:pr-8 md:px-0" data-aos="fade-up">
+                    <div class="md:grid md:grid-cols-5 md:gap-8 items-start">
+                        <div class="hidden md:flex absolute left-[50%] rtl:right-[50%] -translate-x-[50%] rtl:translate-x-[50%] w-10 h-10 bg-secondary text-white rounded-full items-center justify-center border-4 border-gray-50 dark:border-darkBg shadow-lg z-10">
+                            <i class="fas fa-pen-nib"></i>
+                        </div>
+                        <div class="md:hidden absolute -left-[21px] rtl:left-auto rtl:-right-[21px] top-1 w-10 h-10 bg-secondary text-white rounded-full flex items-center justify-center border-4 border-gray-50 dark:border-darkBg shadow-sm">
+                            <i class="fas fa-pen-nib"></i>
+                        </div>
+
+                        <div class="md:col-span-2 md:text-right rtl:md:text-left pt-2 md:pr-12 rtl:md:pr-0 rtl:md:pl-12 mb-4 md:mb-0">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white" data-en="Mid-Level Graphic Designer" data-ar="مصمم جرافيك متوسط الخبرة">Mid-Level Graphic Designer</h3>
+                            <p class="text-primary font-medium" data-en="Noor Advertising & Marketing" data-ar="نور للدعاية والإعلان والتسويق">Noor Advertising & Marketing</p>
+                            <span class="inline-block mt-2 px-3 py-1 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium" data-en="March 2021- September 2023" data-ar="مارس 2021 - سبتمبر 2023">March 2021- September 2023</span>
+                        </div>
+
+                        <div class="md:col-span-3 bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 md:ml-12 rtl:md:ml-0 rtl:md:mr-12 hover:shadow-md transition-shadow">
+                            <ul class="space-y-2 text-gray-600 dark:text-gray-400 list-disc list-inside marker:text-secondary">
+                                <li data-en="Created unique logos based on design thinking, helping clients stand out." data-ar="ابتكار شعارات مميزة بناءً على التفكير التصميمي، لمساعدة العملاء على التميز.">Created unique logos based on design thinking, helping clients stand out.</li>
+                                <li data-en="Created and optimized visual content using Adobe Photoshop, Figma, Canva." data-ar="إنشاء وتحسين المحتوى المرئي باستخدام فوتوشوب، فيجما، وكانفا.">Created and optimized visual content using Adobe Photoshop, Figma, Canva.</li>
+                                <li data-en="Collaborated with a creative team to develop innovative design solutions." data-ar="التعاون مع فريق إبداعي لتطوير حلول تصميم مبتكرة.">Collaborated with a creative team to develop innovative design solutions.</li>
+                                <li data-en="Managed multiple projects, successfully meeting 100% of deadlines." data-ar="إدارة عدة مشاريع والنجاح في تلبية 100% من المواعيد النهائية.">Managed multiple projects, successfully meeting 100% of deadlines.</li>
+                                <li data-en="Implemented new design techniques to improve efficiency." data-ar="تنفيذ تقنيات تصميم جديدة لتحسين الكفاءة.">Implemented new design techniques to improve efficiency.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 3 -->
+                <div class="relative pl-8 rtl:pl-0 rtl:pr-8 md:px-0" data-aos="fade-up">
+                    <div class="md:grid md:grid-cols-5 md:gap-8 items-start">
+                        <div class="hidden md:flex absolute left-[50%] rtl:right-[50%] -translate-x-[50%] rtl:translate-x-[50%] w-10 h-10 bg-accent text-white rounded-full items-center justify-center border-4 border-gray-50 dark:border-darkBg shadow-lg z-10">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <div class="md:hidden absolute -left-[21px] rtl:left-auto rtl:-right-[21px] top-1 w-10 h-10 bg-accent text-white rounded-full flex items-center justify-center border-4 border-gray-50 dark:border-darkBg shadow-sm">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+
+                        <div class="md:col-span-2 md:text-right rtl:md:text-left pt-2 md:pr-12 rtl:md:pr-0 rtl:md:pl-12 mb-4 md:mb-0">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white" data-en="Junior Graphic Designer" data-ar="مصمم جرافيك مبتدئ">Junior Graphic Designer</h3>
+                            <p class="text-primary font-medium" data-en="Euro Copy Center Library" data-ar="مكتبة يورو كوبي سنتر">Euro Copy Center Library</p>
+                            <span class="inline-block mt-2 px-3 py-1 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium" data-en="March 2019-February 2020" data-ar="مارس 2019 - فبراير 2020">March 2019-February 2020</span>
+                        </div>
+
+                        <div class="md:col-span-3 bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 md:ml-12 rtl:md:ml-0 rtl:md:mr-12 hover:shadow-md transition-shadow">
+                            <ul class="space-y-2 text-gray-600 dark:text-gray-400 list-disc list-inside marker:text-accent">
+                                <li data-en="Edited and retouched images using Adobe Photoshop and Canva." data-ar="تعديل وتنقيح الصور باستخدام فوتوشوب وكانفا.">Edited and retouched images using Adobe Photoshop and Canva.</li>
+                                <li data-en="Supported team in preparing files for printing and maintaining layout." data-ar="دعم الفريق في تجهيز الملفات للطباعة والحفاظ على التنسيق.">Supported team in preparing files for printing and maintaining layout.</li>
+                                <li data-en="Applied brand guidelines to maintain consistent visual identity." data-ar="تطبيق إرشادات العلامة التجارية للحفاظ على هوية بصرية متسقة.">Applied brand guidelines to maintain consistent visual identity.</li>
+                                <li data-en="Assisted in managing multiple design projects, meeting 100% of deadlines." data-ar="المساعدة في إدارة عدة مشاريع تصميم، مع تلبية 100% من المواعيد النهائية.">Assisted in managing multiple design projects, meeting 100% of deadlines.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 4 -->
+                <div class="relative pl-8 rtl:pl-0 rtl:pr-8 md:px-0" data-aos="fade-up">
+                    <div class="md:grid md:grid-cols-5 md:gap-8 items-start">
+                        <div class="hidden md:flex absolute left-[50%] rtl:right-[50%] -translate-x-[50%] rtl:translate-x-[50%] w-10 h-10 bg-gray-500 text-white rounded-full items-center justify-center border-4 border-gray-50 dark:border-darkBg shadow-lg z-10">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="md:hidden absolute -left-[21px] rtl:left-auto rtl:-right-[21px] top-1 w-10 h-10 bg-gray-500 text-white rounded-full flex items-center justify-center border-4 border-gray-50 dark:border-darkBg shadow-sm">
+                            <i class="fas fa-users"></i>
+                        </div>
+
+                        <div class="md:col-span-2 md:text-right rtl:md:text-left pt-2 md:pr-12 rtl:md:pr-0 rtl:md:pl-12 mb-4 md:mb-0">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white" data-en="HR Specialist" data-ar="أخصائي موارد بشرية">HR Specialist</h3>
+                            <p class="text-gray-600 dark:text-gray-400 font-medium" data-en="New Horus Tourism Company" data-ar="شركة نيو حورس للسياحة">New Horus Tourism Company</p>
+                            <span class="inline-block mt-2 px-3 py-1 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium" data-en="September 2016 - March 2019" data-ar="سبتمبر 2016 - مارس 2019">September 2016 - March 2019</span>
+                        </div>
+
+                        <div class="md:col-span-3 bg-white dark:bg-darkCard p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 md:ml-12 rtl:md:ml-0 rtl:md:mr-12 hover:shadow-md transition-shadow">
+                            <ul class="space-y-2 text-gray-600 dark:text-gray-400 list-disc list-inside marker:text-gray-500">
+                                <li data-en="Coordinated employee onboarding programs, improving integration by 30%." data-ar="تنسيق برامج تهيئة الموظفين الجدد، مما أدى لتحسين اندماجهم بنسبة 30%.">Coordinated employee onboarding programs, improving integration by 30%.</li>
+                                <li data-en="Assisted in payroll, attendance, and leave management with 98% accuracy." data-ar="المساعدة في إدارة الرواتب والحضور والإجازات بدقة بلغت 98%.">Assisted in payroll, attendance, and leave management with 98% accuracy.</li>
+                                <li data-en="Ensured 100% compliance with HR policies and Egyptian labor law." data-ar="ضمان الامتثال بنسبة 100% لسياسات الموارد البشرية وقانون العمل المصري.">Ensured 100% compliance with HR policies and Egyptian labor law.</li>
+                                <li data-en="Prepared HR reports, improving decision-making efficiency by 25%." data-ar="إعداد تقارير الموارد البشرية، مما أدى لتحسين كفاءة اتخاذ القرار بنسبة 25%.">Prepared HR reports, improving decision-making efficiency by 25%.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills & Certifications -->
+    <section id="skills" class="py-20 bg-white dark:bg-darkCard transition-colors duration-300 border-y border-gray-100 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lang-fade">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-en="Skills & Certifications" data-ar="المهارات والشهادات">Skills & Certifications</h2>
+                <div class="h-1 w-20 bg-primary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                
+                <!-- Skills Columns -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Technical Skills -->
+                    <div class="bg-gray-50 dark:bg-darkBg rounded-2xl p-6 border border-gray-100 dark:border-gray-800" data-aos="fade-up">
+                        <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                            <i class="fas fa-tools text-primary"></i> <span data-en="Technical Skills" data-ar="المهارات التقنية">Technical Skills</span>
+                        </h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold shadow-sm text-blue-600 dark:text-blue-400" data-en="Graphic Design" data-ar="تصميم الجرافيك">Graphic Design</span>
+                            <span class="px-4 py-2 bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold shadow-sm text-blue-600 dark:text-blue-400" data-en="Adobe Creative Suite" data-ar="حزمة أدوبي">Adobe Creative Suite</span>
+                            <span class="px-4 py-2 bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold shadow-sm">Photoshop</span>
+                            <span class="px-4 py-2 bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold shadow-sm">Illustrator</span>
+                            <span class="px-4 py-2 bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold shadow-sm">Premiere Pro</span>
+                            <span class="px-4 py-2 bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold shadow-sm">Figma</span>
+                            <span class="px-4 py-2 bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold shadow-sm">Canva</span>
+                            <span class="px-4 py-2 bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold shadow-sm">Affinity</span>
+                            <span class="px-4 py-2 bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold shadow-sm text-purple-500" data-en="AI Tools" data-ar="أدوات الذكاء الاصطناعي">AI Tools</span>
+                            <span class="px-4 py-2 bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold shadow-sm">Microsoft Office</span>
+                            <span class="px-4 py-2 bg-white dark:bg-darkCard border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold shadow-sm" data-en="Data Analysis" data-ar="تحليل البيانات">Data Analysis</span>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-8">
+                        <!-- Soft Skills -->
+                        <div class="bg-gray-50 dark:bg-darkBg rounded-2xl p-6 border border-gray-100 dark:border-gray-800" data-aos="fade-up" data-aos-delay="100">
+                            <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <i class="fas fa-brain text-secondary"></i> <span data-en="Soft Skills" data-ar="المهارات الشخصية">Soft Skills</span>
+                            </h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-white dark:bg-darkCard shadow-sm flex items-center justify-center text-green-500"><i class="fas fa-check"></i></div>
+                                    <span class="font-medium" data-en="Leadership" data-ar="القيادة">Leadership</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-white dark:bg-darkCard shadow-sm flex items-center justify-center text-green-500"><i class="fas fa-check"></i></div>
+                                    <span class="font-medium" data-en="Teamwork" data-ar="العمل الجماعي">Teamwork</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-white dark:bg-darkCard shadow-sm flex items-center justify-center text-green-500"><i class="fas fa-check"></i></div>
+                                    <span class="font-medium" data-en="Problem Solving" data-ar="حل المشكلات">Problem Solving</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-white dark:bg-darkCard shadow-sm flex items-center justify-center text-green-500"><i class="fas fa-check"></i></div>
+                                    <span class="font-medium" data-en="Time Management" data-ar="إدارة الوقت">Time Management</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Languages -->
+                        <div class="bg-gray-50 dark:bg-darkBg rounded-2xl p-6 border border-gray-100 dark:border-gray-800" data-aos="fade-up" data-aos-delay="200">
+                            <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <i class="fas fa-language text-accent"></i> <span data-en="Languages" data-ar="اللغات">Languages</span>
+                            </h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-medium" data-en="Arabic" data-ar="العربية">Arabic</span>
+                                        <span class="text-sm text-gray-500" data-en="Native" data-ar="اللغة الأم">Native</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-medium" data-en="English" data-ar="الإنجليزية">English</span>
+                                        <span class="text-sm text-gray-500" data-en="Advanced" data-ar="متقدم">Advanced</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certifications -->
+                <div class="bg-gray-50 dark:bg-darkBg rounded-2xl p-6 border border-gray-100 dark:border-gray-800 h-full" data-aos="fade-left">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i class="fas fa-certificate text-yellow-500"></i> <span data-en="Courses & Certifications" data-ar="الدورات والشهادات">Courses & Certifications</span>
+                    </h3>
+                    <div class="space-y-4 relative before:absolute before:inset-0 before:ml-5 rtl:before:ml-0 rtl:before:mr-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-300 dark:before:via-gray-600 before:to-transparent">
+                        
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-white dark:border-darkCard bg-blue-100 dark:bg-blue-900 text-primary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 rtl:md:group-odd:translate-x-1/2 md:group-even:translate-x-1/2 rtl:md:group-even:-translate-x-1/2 z-10">
+                                <i class="fas fa-star text-sm"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-darkCard shadow-sm">
+                                <p class="text-sm font-semibold" data-en="Freelance Basics Course" data-ar="دورة أساسيات العمل الحر">Freelance Basics Course</p>
+                            </div>
+                        </div>
+                        
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-white dark:border-darkCard bg-blue-100 dark:bg-blue-900 text-primary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 rtl:md:group-odd:translate-x-1/2 md:group-even:translate-x-1/2 rtl:md:group-even:-translate-x-1/2 z-10">
+                                <i class="fas fa-star text-sm"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-darkCard shadow-sm">
+                                <p class="text-sm font-semibold" data-en="General Skills Level 2: Work Environment Keys" data-ar="المهارات العامة المستوى الثاني: مفاتيح بيئة العمل">General Skills Level 2: Work Environment Keys</p>
+                            </div>
+                        </div>
+
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-white dark:border-darkCard bg-blue-100 dark:bg-blue-900 text-primary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 rtl:md:group-odd:translate-x-1/2 md:group-even:translate-x-1/2 rtl:md:group-even:-translate-x-1/2 z-10">
+                                <i class="fas fa-star text-sm"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-darkCard shadow-sm">
+                                <p class="text-sm font-semibold" data-en="General Skills Level 1: Discover and Upgrade Your Skills" data-ar="المهارات العامة المستوى الأول: اكتشف وطور مهاراتك">General Skills Level 1: Discover and Upgrade Your Skills</p>
+                            </div>
+                        </div>
+
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-white dark:border-darkCard bg-blue-100 dark:bg-blue-900 text-primary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 rtl:md:group-odd:translate-x-1/2 md:group-even:translate-x-1/2 rtl:md:group-even:-translate-x-1/2 z-10">
+                                <i class="fas fa-star text-sm"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-darkCard shadow-sm">
+                                <p class="text-sm font-semibold" data-en="ICDL Certification" data-ar="شهادة الرخصة الدولية لقيادة الحاسب الآلي (ICDL)">ICDL Certification</p>
+                            </div>
+                        </div>
+
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-white dark:border-darkCard bg-blue-100 dark:bg-blue-900 text-primary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 rtl:md:group-odd:translate-x-1/2 md:group-even:translate-x-1/2 rtl:md:group-even:-translate-x-1/2 z-10">
+                                <i class="fas fa-star text-sm"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-darkCard shadow-sm">
+                                <p class="text-sm font-semibold" data-en="Human Resources Course" data-ar="دورة الموارد البشرية">Human Resources Course</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50 dark:bg-darkBg transition-colors duration-300 relative overflow-hidden">
+        <!-- Decorative background -->
+        <div class="absolute -top-40 -right-40 rtl:-left-40 rtl:right-auto w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 rtl:-right-40 rtl:left-auto w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 lang-fade">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-en="Let's Connect" data-ar="لنتواصل معاً">Let's Connect</h2>
+                <div class="h-1 w-20 bg-primary mx-auto rounded-full mb-6"></div>
+                <p class="text-gray-600 dark:text-gray-400" data-en="Feel free to reach out for collaborations or just a friendly hello." data-ar="لا تتردد في التواصل من أجل التعاون أو فقط لإلقاء التحية.">Feel free to reach out for collaborations or just a friendly hello.</p>
+            </div>
+
+            <div class="bg-white dark:bg-darkCard rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100 dark:border-gray-800" data-aos="zoom-in">
+                
+                <!-- Primary Contact Info -->
+                <div class="grid md:grid-cols-2 gap-8 mb-10 pb-10 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center gap-4 group">
+                        <div class="w-14 h-14 rounded-full bg-blue-50 dark:bg-gray-800 flex items-center justify-center text-primary text-2xl group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                            <i class="fas fa-phone-alt rtl:rotate-270"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 font-medium" data-en="Call Me" data-ar="اتصل بي">Call Me</p>
+                            <a href="tel:+201112500660" class="text-lg font-bold text-gray-900 dark:text-white hover:text-primary transition-colors dir-ltr inline-block">+20 111 250 0660</a>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 group">
+                        <div class="w-14 h-14 rounded-full bg-blue-50 dark:bg-gray-800 flex items-center justify-center text-primary text-2xl group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 font-medium" data-en="Email Me" data-ar="راسلني">Email Me</p>
+                            <div class="flex flex-col">
+                                <a href="mailto:islamhassan0096@gmail.com" class="text-base font-bold text-gray-900 dark:text-white hover:text-primary transition-colors truncate text-left">islamhassan0096@gmail.com</a>
+                                <a href="mailto:islamcinograph@gmail.com" class="text-base font-bold text-gray-900 dark:text-white hover:text-primary transition-colors truncate text-left">islamcinograph@gmail.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Links Grid -->
+                <h3 class="text-center font-bold text-xl mb-8" data-en="Follow My Work" data-ar="تابع أعمالي">Follow My Work</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    
+                    <a href="https://islamhassan2026.myportfolio.com/" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 dark:bg-darkBg hover:bg-primary hover:text-white transition-all duration-300 group border border-gray-100 dark:border-gray-700">
+                        <i class="fas fa-briefcase text-3xl mb-2 text-gray-700 dark:text-gray-300 group-hover:text-white"></i>
+                        <span class="font-medium text-sm">Portfolio</span>
+                    </a>
+
+                    <a href="https://www.behance.net/eslamhassan52" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 dark:bg-darkBg hover:bg-[#1769ff] hover:text-white transition-all duration-300 group border border-gray-100 dark:border-gray-700">
+                        <i class="fab fa-behance text-3xl mb-2 text-[#1769ff] group-hover:text-white"></i>
+                        <span class="font-medium text-sm">Behance</span>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/islam-hassan-59343a263" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 dark:bg-darkBg hover:bg-[#0077b5] hover:text-white transition-all duration-300 group border border-gray-100 dark:border-gray-700">
+                        <i class="fab fa-linkedin-in text-3xl mb-2 text-[#0077b5] group-hover:text-white"></i>
+                        <span class="font-medium text-sm">LinkedIn</span>
+                    </a>
+
+                    <a href="https://wa.me/201270520274" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 dark:bg-darkBg hover:bg-[#25D366] hover:text-white transition-all duration-300 group border border-gray-100 dark:border-gray-700">
+                        <i class="fab fa-whatsapp text-3xl mb-2 text-[#25D366] group-hover:text-white"></i>
+                        <span class="font-medium text-sm">WhatsApp</span>
+                    </a>
+
+                    <a href="https://www.facebook.com/islam.hassan.5817" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 dark:bg-darkBg hover:bg-[#1877F2] hover:text-white transition-all duration-300 group border border-gray-100 dark:border-gray-700">
+                        <i class="fab fa-facebook-f text-3xl mb-2 text-[#1877F2] group-hover:text-white"></i>
+                        <span class="font-medium text-sm">Facebook</span>
+                    </a>
+
+                    <a href="https://www.instagram.com/islam.hassan.5817" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 dark:bg-darkBg hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white transition-all duration-300 group border border-gray-100 dark:border-gray-700">
+                        <i class="fab fa-instagram text-3xl mb-2 text-[#E1306C] group-hover:text-white"></i>
+                        <span class="font-medium text-sm">Instagram</span>
+                    </a>
+
+                    <a href="https://www.threads.net/@islam.hassan.5817" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 dark:bg-darkBg hover:bg-black hover:text-white transition-all duration-300 group border border-gray-100 dark:border-gray-700">
+                        <i class="fas fa-at text-3xl mb-2 text-black dark:text-white group-hover:text-white"></i>
+                        <span class="font-medium text-sm">Threads</span>
+                    </a>
+
+                    <a href="https://www.youtube.com/@islamelKhedewy" target="_blank" class="flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 dark:bg-darkBg hover:bg-[#FF0000] hover:text-white transition-all duration-300 group border border-gray-100 dark:border-gray-700">
+                        <i class="fab fa-youtube text-3xl mb-2 text-[#FF0000] group-hover:text-white"></i>
+                        <span class="font-medium text-sm">YouTube</span>
+                    </a>
+                    
+                    <a href="https://www.tiktok.com/@dr.islam_h_khedewy?is_from_webapp=1&sender_device=pc" target="_blank" class="col-span-2 sm:col-span-4 flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 dark:bg-darkBg hover:bg-black hover:text-white transition-all duration-300 group border border-gray-100 dark:border-gray-700">
+                        <i class="fab fa-tiktok text-3xl mb-2 text-black dark:text-white group-hover:text-white"></i>
+                        <span class="font-medium text-sm">TikTok</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-darkCard py-8 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-500 dark:text-gray-400 font-medium lang-fade" 
+               data-en='All rights reserved by <strong class="font-bold text-gray-900 dark:text-white">Cinograph</strong>. Developed by <a href="https://www.facebook.com/islam.hassan.5817" target="_blank" class="text-primary hover:underline font-bold">Islam Hassan</a> &copy; <span class="footer-year"></span>' 
+               data-ar='جميع الحقوق محفوظة لـ <strong class="font-bold text-gray-900 dark:text-white">Cinograph</strong>. تم التطوير بواسطة <a href="https://www.facebook.com/islam.hassan.5817" target="_blank" class="text-primary hover:underline font-bold">إسلام حسن</a> &copy; <span class="footer-year"></span>'>
+                All rights reserved by <strong class="font-bold text-gray-900 dark:text-white">Cinograph</strong>. Developed by <a href="https://www.facebook.com/islam.hassan.5817" target="_blank" class="text-primary hover:underline font-bold">Islam Hassan</a> &copy; <span class="footer-year"></span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize AOS Animation Library
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800,
+            easing: 'ease-in-out',
+        });
+
+        // Set current year in footer
+        function updateYear() {
+            document.querySelectorAll('.footer-year').forEach(el => {
+                el.textContent = new Date().getFullYear();
+            });
+        }
+        updateYear();
+
+        // Dark Mode Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleBtnMobile = document.getElementById('theme-toggle-mobile');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or system preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+
+        function toggleTheme() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleBtnMobile.addEventListener('click', toggleTheme);
+
+        // Language Toggle Logic
+        let currentLang = 'en';
+        const langToggleDesktop = document.getElementById('lang-toggle-desktop');
+        const langToggleMobile = document.getElementById('lang-toggle-mobile');
+        const translatableElements = document.querySelectorAll('[data-en]');
+
+        function switchLanguage() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            
+            // Add fade-out effect
+            document.querySelectorAll('.lang-fade').forEach(el => el.style.opacity = '0');
+
+            setTimeout(() => {
+                // Change Direction and Font
+                if (currentLang === 'ar') {
+                    document.body.setAttribute('dir', 'rtl');
+                    document.body.classList.add('font-[Cairo]');
+                    langToggleDesktop.textContent = 'English';
+                    langToggleMobile.textContent = 'EN';
+                } else {
+                    document.body.setAttribute('dir', 'ltr');
+                    document.body.classList.remove('font-[Cairo]');
+                    langToggleDesktop.textContent = 'عربي';
+                    langToggleMobile.textContent = 'AR';
+                }
+
+                // Translate Text
+                translatableElements.forEach(el => {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = el.getAttribute(`data-${currentLang}`);
+                    } else {
+                        // Use innerHTML to preserve line breaks like <br>
+                        el.innerHTML = el.getAttribute(`data-${currentLang}`);
+                    }
+                });
+
+                updateYear();
+
+                // Add fade-in effect
+                document.querySelectorAll('.lang-fade').forEach(el => el.style.opacity = '1');
+            }, 300); // Wait for fade out
+        }
+
+        langToggleDesktop.addEventListener('click', switchLanguage);
+        langToggleMobile.addEventListener('click', switchLanguage);
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-sm');
+            } else {
+                navbar.classList.remove('shadow-sm');
+            }
+        });
+    </script>
+</body>
+</html>
